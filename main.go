@@ -35,8 +35,8 @@ var public = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 var private = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	post := &post{
 		Title: "非公開ブログ",
-		Tag: "private",
-		URL: "https://qiita.com",
+		Tag:   "private",
+		URL:   "https://qiita.com",
 	}
 	json.NewEncoder(w).Encode(post)
 })
