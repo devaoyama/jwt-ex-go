@@ -9,8 +9,8 @@ import (
 
 type post struct {
 	Title string `json:"title"`
-	Tag string `json:"tag"`
-	URL string `json:"url"`
+	Tag   string `json:"tag"`
+	URL   string `json:"url"`
 }
 
 func main() {
@@ -20,11 +20,11 @@ func main() {
 	log.Println(http.ListenAndServe(":8080", r))
 }
 
-var public = http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
+var public = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	post := &post{
 		Title: "ブログのタイトル",
-		Tag: "blog",
-		URL: "https://qiita.com",
+		Tag:   "blog",
+		URL:   "https://qiita.com",
 	}
 	json.NewEncoder(w).Encode(post)
 })
