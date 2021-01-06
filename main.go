@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"jwt-ex-go/auth"
 	"log"
 	"net/http"
 )
@@ -16,6 +17,7 @@ type post struct {
 func main() {
 	r := mux.NewRouter()
 	r.Handle("/public", public)
+	r.Handle("/auth", auth.GetTokenHandler)
 
 	log.Println(http.ListenAndServe(":8080", r))
 }
