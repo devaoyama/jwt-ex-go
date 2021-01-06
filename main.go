@@ -17,6 +17,7 @@ type post struct {
 func main() {
 	r := mux.NewRouter()
 	r.Handle("/public", public)
+	r.Handle("/private", auth.JwtMiddleware.Handler(private))
 	r.Handle("/auth", auth.GetTokenHandler)
 
 	log.Println(http.ListenAndServe(":8080", r))
@@ -25,8 +26,17 @@ func main() {
 var public = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	post := &post{
 		Title: "ブログのタイトル",
-		Tag:   "blog",
+		Tag:   "public",
 		URL:   "https://qiita.com",
+	}
+	json.NewEncoder(w).Encode(post)
+})
+
+var private = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	post := &post{
+		Title: "非公開ブログ",
+		Tag: "private",
+		URL: "https://qiita.com",
 	}
 	json.NewEncoder(w).Encode(post)
 })

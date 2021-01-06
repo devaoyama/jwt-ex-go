@@ -1,6 +1,7 @@
 package auth
 
 import (
+	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
 	"net/http"
 )
@@ -17,4 +18,11 @@ var GetTokenHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reque
 	tokenString, _ := token.SignedString([]byte(SIGNED_KEY))
 
 	w.Write([]byte(tokenString))
+})
+
+var JwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
+	ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
+		return []byte(SIGNED_KEY), nil
+	},
+	SigningMethod: jwt.SigningMethodHS256,
 })
